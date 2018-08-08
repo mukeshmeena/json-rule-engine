@@ -9,6 +9,10 @@ public abstract class Fact<V> {
 		this.name = name;
 	}
 	
+	public String getName() {
+		return name;
+	}
+
 	public abstract V get(Map<String, Object> params, RuleContext ctx);
 	
 }
