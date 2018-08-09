@@ -6,14 +6,14 @@ import java.util.Map;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.paytm.ruleengine.util.Condition;
-import com.paytm.ruleengine.util.ConditionOperator;
-import com.paytm.ruleengine.util.DynamicFact;
-import com.paytm.ruleengine.util.Fact;
-import com.paytm.ruleengine.util.FactOperator;
-import com.paytm.ruleengine.util.Rule;
-import com.paytm.ruleengine.util.RuleEngine;
-import com.paytm.ruleengine.util.RuleResult;
+import com.paytm.ruleengine.condition.Condition;
+import com.paytm.ruleengine.condition.ConditionOperator;
+import com.paytm.ruleengine.engine.RuleEngine;
+import com.paytm.ruleengine.fact.DynamicFact;
+import com.paytm.ruleengine.fact.Fact;
+import com.paytm.ruleengine.operator.FactOperator;
+import com.paytm.ruleengine.rule.Rule;
+import com.paytm.ruleengine.rule.RuleResult;
 
 public class RuleEngineTest {
 	
