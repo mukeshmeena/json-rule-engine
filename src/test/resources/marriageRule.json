@@ -1,0 +1,21 @@
+{
+	"name": "marriageRule",
+	"conditions": {
+		"any": [
+			{"all": [
+				{"fact":"age", "operator":"GTE", "value": 21},
+				{"fact":"gender", "operator":"EQ", "value":"M"}
+			]},
+			{"all": [
+				{"fact":"age", "operator":"GTE", "value": 18},
+				{"fact":"gender", "operator":"EQ", "value":"F"}
+			]}
+		]
+	},
+	"successActions": [
+		{"type":"print", "params": {"message":"Age is marriageable"}}
+	],
+	"failureActions": [
+		{"type":"print", "params": {"message":"Age is not marriageable"}}
+	]
+}
