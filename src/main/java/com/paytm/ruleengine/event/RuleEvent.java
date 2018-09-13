@@ -4,7 +4,7 @@ import java.util.Map;
 
 public class RuleEvent {
 
-	String name;
+	String type;
 	Map<String, Object> params;
 	
 }

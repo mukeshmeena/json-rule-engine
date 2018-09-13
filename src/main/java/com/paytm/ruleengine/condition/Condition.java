@@ -101,6 +101,12 @@ public class Condition<L, R> implements Serializable {
 	public List<Condition> getConditions() {
 		return conditions;
 	}
+	
+	public void addCondition(Condition condition) {
+		if(this.conditions == null) 
+			this.conditions = new LinkedList<>();
+		this.conditions.add(condition);
+	}
 
 	public void setConditions(List<Condition> conditions) {
 		this.conditions = conditions;
@@ -128,6 +134,56 @@ public class Condition<L, R> implements Serializable {
 
 	public void setConfigValue(R configValue) {
 		this.configValue = configValue;
+	}
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((conditions == null) ? 0 : conditions.hashCode());
+		result = prime * result + ((configValue == null) ? 0 : configValue.hashCode());
+		result = prime * result + ((expression == null) ? 0 : expression.hashCode());
+		result = prime * result + ((factName == null) ? 0 : factName.hashCode());
+		result = prime * result + ((operator == null) ? 0 : operator.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Condition other = (Condition) obj;
+		if ( (conditions == null && other.conditions != null) ||
+				(conditions != null && other.conditions == null) ) {
+			return false;
+		} else if (conditions != null) {
+			if(conditions.size() != other.conditions.size())
+				return false;
+			for(int i=0; i<conditions.size(); i++) {
+				if(!conditions.get(i).equals(other.conditions.get(i))) {
+					return false;
+				}
+			}
+		}
+		if (configValue == null) {
+			if (other.configValue != null)
+				return false;
+		} else if (!configValue.equals(other.configValue))
+			return false;
+		if (expression != other.expression)
+			return false;
+		if (factName == null) {
+			if (other.factName != null)
+				return false;
+		} else if (!factName.equals(other.factName))
+			return false;
+		if (operator != other.operator)
+			return false;
+		return true;
 	}
 
 	@Override
