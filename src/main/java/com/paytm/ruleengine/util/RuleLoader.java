@@ -11,10 +11,18 @@ import com.google.gson.JsonPrimitive;
 import com.google.gson.stream.JsonReader;
 import com.paytm.ruleengine.condition.Condition;
 import com.paytm.ruleengine.condition.ConditionOperator;
+import com.paytm.ruleengine.fact.Fact;
+import com.paytm.ruleengine.fact.FactResolver;
 import com.paytm.ruleengine.operator.FactOperator;
 import com.paytm.ruleengine.rule.Rule;
 
 public class RuleLoader {
+  
+  private FactResolver factResolver;
+  
+  public RuleLoader(FactResolver factResolver) {
+    this.factResolver = factResolver;
+  }
 	
 	public Rule loadByName(String ruleName) {
 		Rule rule = null;
@@ -41,6 +49,9 @@ public class RuleLoader {
 		Condition condition = new Condition();
 		loadCondition(conditionsJson, condition);
 		rule.setCondition(condition);
+		
+		//JsonObject successActionsJson = json.getAsJsonObject("successActions");
+		//JsonObject failureActionsJson = json.getAsJsonObject("failureActions");
 		
 		return rule;
 	}
@@ -71,6 +82,11 @@ public class RuleLoader {
 			} else {
 				condition.setFactName(json.get("fact").getAsString());
 				condition.setOperator(FactOperator.valueOf(json.get("operator").getAsString()));
+				
+				Fact fact = this.factResolver.resolve(condition.getFactName());
+				if(fact != null) {
+				  condition.setFact(fact);
+				}
 				
 				JsonElement valueJson = json.get("value");
 				if(valueJson.isJsonPrimitive()) {

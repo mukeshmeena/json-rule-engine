@@ -1,9 +1,9 @@
 package com.paytm.ruleengine.condition;
 
 public class ConditionResult {
-	Condition condition;
-	boolean result;
-	Object factResult;
+	private Condition condition;
+	private boolean result;
+	private Object factResult;
 	
 	public Condition getCondition() {
 		return condition;

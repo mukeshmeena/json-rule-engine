@@ -38,6 +38,13 @@ public class Condition<L, R> implements Serializable {
 		this.configValue = configValue;
 	}
 	
+	public Condition(Fact fact, FactOperator op, R configValue) {
+	  this.fact = fact;
+    this.factName = fact.getName();
+    this.operator = op;
+    this.configValue = configValue;
+  }
+	
 	public Condition(ConditionOperator exp, Condition... conditions) {
 		if(this.conditions == null) this.conditions = new LinkedList<>();
 		Collections.addAll(this.conditions, conditions);
