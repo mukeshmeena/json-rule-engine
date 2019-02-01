@@ -1,0 +1,31 @@
+{
+  "name": "marriageRule",
+  "conditions": {
+    "all": [
+      {
+        "fact": "order",
+        "operator": "present",
+        "value": ""
+      },
+      {
+        "fact": "customer_id",
+        "operator": "EQ",
+        "value": "4394455"
+      },
+      {
+        "fact": "merchant_ids",
+        "operator": "hasCommon",
+        "value": [
+          2,
+          22,
+          512714,
+          512714,
+          "123",
+          "456",
+          123,
+          456
+        ]
+      }
+    ]
+  }
+}

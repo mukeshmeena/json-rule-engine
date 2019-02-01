@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.paytm.ruleengine.fact.Fact;
-import com.paytm.ruleengine.operator.FactOperator;
+import com.paytm.ruleengine.operator.Operator;
 import com.paytm.ruleengine.rule.RuleContext;
 import com.paytm.ruleengine.rule.RuleResult;
 
@@ -15,51 +15,51 @@ public class Condition<L, R> implements Serializable {
 	private static final long serialVersionUID = 58448454428844572L;
 
 	private ConditionOperator expression = ConditionOperator.AND;
-	
+
 	private List<Condition> conditions;
 	private String factName;
 	//can't be serialized ... need to be fetched from all registered facts
 	private transient Fact<L> fact;
-	private FactOperator operator;
+	private Operator operator;
 	private R configValue;
-	
+
 	public Condition() {
-		
+
 	}
-	
+
 	public Condition(Condition... conditions) {
 		if(this.conditions == null) this.conditions = new LinkedList<>();
 		Collections.addAll(this.conditions, conditions);
 	}
-	
-	public Condition(String factName, FactOperator op, R configValue) {
+
+	public Condition(String factName, Operator op, R configValue) {
 		this.factName = factName;
 		this.operator = op;
 		this.configValue = configValue;
 	}
-	
-	public Condition(Fact fact, FactOperator op, R configValue) {
-	  this.fact = fact;
-    this.factName = fact.getName();
-    this.operator = op;
-    this.configValue = configValue;
-  }
-	
+
+	public Condition(Fact fact, Operator op, R configValue) {
+		this.fact = fact;
+		this.factName = fact.getName();
+		this.operator = op;
+		this.configValue = configValue;
+	}
+
 	public Condition(ConditionOperator exp, Condition... conditions) {
 		if(this.conditions == null) this.conditions = new LinkedList<>();
 		Collections.addAll(this.conditions, conditions);
 		this.expression = exp;
 	}
-	
+
 	public Condition(ConditionOperator exp, List<Condition> conditions) {
 		this.expression = exp;
 		this.conditions = conditions;
 	}
-	
+
 	public boolean eval(Map<String, Object> params, RuleContext ctx, RuleResult ruleResult) {
 		ConditionResult conditionResult = new ConditionResult();
 		conditionResult.setCondition(this);
-		
+
 		boolean result = false;
 		if(conditions != null) {
 			if(ConditionOperator.AND.equals(expression)) {
@@ -79,15 +79,12 @@ public class Condition<L, R> implements Serializable {
 			}
 		} else {
 			Object factValue = null;
-			if(fact == null) 
-				 factValue = params.get(factName);
-			else 
-				 factValue = fact.get(params, ctx);
+			factValue = fact.get(params, ctx);
 			result = operator.compare(factValue, configValue);
-			
+
 			conditionResult.setFactResult(factValue);
 		}
-		
+
 		conditionResult.setResult(result);
 		ruleResult.addConditionResult(conditionResult);
 		return result;
@@ -108,9 +105,9 @@ public class Condition<L, R> implements Serializable {
 	public List<Condition> getConditions() {
 		return conditions;
 	}
-	
+
 	public void addCondition(Condition condition) {
-		if(this.conditions == null) 
+		if(this.conditions == null)
 			this.conditions = new LinkedList<>();
 		this.conditions.add(condition);
 	}
@@ -127,11 +124,11 @@ public class Condition<L, R> implements Serializable {
 		this.factName = factName;
 	}
 
-	public FactOperator getOperator() {
+	public Operator getOperator() {
 		return operator;
 	}
 
-	public void setOperator(FactOperator operator) {
+	public void setOperator(Operator operator) {
 		this.operator = operator;
 	}
 
@@ -142,7 +139,7 @@ public class Condition<L, R> implements Serializable {
 	public void setConfigValue(R configValue) {
 		this.configValue = configValue;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
